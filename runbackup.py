@@ -33,20 +33,21 @@ dir = os.path.dirname(os.path.realpath(__file__))
 ##### ENVIRONMENT VARIABLES #####
 import app.config
 
-wikiname = app.config.wikis[0]["wikiname"]
+wikinum = 1 # temporary until I've enabled looping through wikis
 
-sourcepath = app.config.wikis[0]["sourcepath"]
-sourcehost = app.config.wikis[0]["sourcehost"]
-sourceuser = app.config.wikis[0]["sourceuser"]
-sourcepass = app.config.wikis[0]["sourcepass"]
-sourcedb   = app.config.wikis[0]["sourcedb"]
+wikiname = app.config.wikis[wikinum]["wikiname"]
 
-localpath = app.config.wikis[0]["localpath"]
-localhost = app.config.wikis[0]["localhost"]
-localuser = app.config.wikis[0]["localuser"]
-localpass = app.config.wikis[0]["localpass"]
-localdb   = app.config.wikis[0]["localdb"]
+sourcepath = app.config.wikis[wikinum]["sourcepath"]
+sourcehost = app.config.wikis[wikinum]["sourcehost"]
+sourceuser = app.config.wikis[wikinum]["sourceuser"]
+sourcepass = app.config.wikis[wikinum]["sourcepass"]
+sourcedb   = app.config.wikis[wikinum]["sourcedb"]
 
+localpath = app.config.wikis[wikinum]["localpath"]
+localhost = app.config.wikis[wikinum]["localhost"]
+localuser = app.config.wikis[wikinum]["localuser"]
+localpass = app.config.wikis[wikinum]["localpass"]
+localdb   = app.config.wikis[wikinum]["localdb"]
 
 
 # FIXME: don't rely on JSCMOD extension
@@ -56,7 +57,7 @@ wgReadOnlyPath = join(sourcepath,'extensions','JSCMOD','wgReadOnly.php')
 wikiSqlFile = join(localpath,"wiki-db.sql")
 
 
-
+staticbackup = app.config.staticbackup
 libFiles = app.config.libFiles
 logFiles = app.config.logFiles
 zipType = app.config.zipType
@@ -218,7 +219,7 @@ printSteps("Zip /images into backup location")
 
 zipFilePath = join(staticbackup,sourcedb+"_"+backupTimestamp+".zip")
 
-if sevenZip is not None:
+if zipType == "7zip":
 	proc = subprocess.Popen(
 		[sevenZip, "a", zipFilePath, join(localpath, "images", "*"), "-r", "-tzip"],
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -226,22 +227,23 @@ if sevenZip is not None:
 
 else:
 	proc = subprocess.Popen(
-		["zip", "-r", zipFilePath, localpath],
+		["zip", "-r", zipFilePath, join(localpath, "images")],
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	recordSubprocessOutput("Zip Utility Compression", proc.communicate())
 
 
 ##### (10) Update static backup folder with SQL file #####
 printSteps("Add SQL file to compressed backup")
-if sevenZip is not None:
+if zipType == "7zip":
 	proc = subprocess.Popen(
 		[sevenZip, "u", zipFilePath, wikiSqlFile],
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	recordSubprocessOutput("7-Zip Update with SQL", proc.communicate())
 
 else:
+	print zipFilePath
 	proc = subprocess.Popen(
-		["zip", "-r", zipFilePath, localpath],
+		["zip", "-r", zipFilePath, wikiSqlFile],
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	recordSubprocessOutput("Zip Update with SQL", proc.communicate())
 

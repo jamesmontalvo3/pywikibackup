@@ -1,9 +1,9 @@
 import json, os
 from os.path import join
 
-dir = os.path.dirname(os.path.realpath(__file__))
+dir = os.path.realpath(join( os.path.dirname(os.path.realpath(__file__)), ".."))
 
-with open( join(dir, "..", "config.json"), 'r' ) as f:
+with open( join(dir, "config.json"), 'r' ) as f:
 	config = json.load( f )
 	f.close()
 
@@ -28,6 +28,8 @@ else:
 	else:
 		sevenZip = "7z.exe"
 
+
+staticbackup = config["staticbackup"]
 
 libFiles = join(dir, "lib")
 logFiles = join(dir, "log")
