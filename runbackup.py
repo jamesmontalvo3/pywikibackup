@@ -52,17 +52,17 @@ wikiname = app.config.wikis[wikinum]["wikiname"]
 
 print "Set to Wiki #%d %s" % (wikinum, wikiname)
 
-sourcepath = app.config.wikis[wikinum]["sourcepath"]
-sourcehost = app.config.wikis[wikinum]["sourcehost"]
-sourceuser = app.config.wikis[wikinum]["sourceuser"]
-sourcepass = app.config.wikis[wikinum]["sourcepass"]
-sourcedb   = app.config.wikis[wikinum]["sourcedb"]
+sourcepath = app.config.getSourcePath(wikinum)
+sourcehost = app.config.getSourceHost(wikinum)
+sourceuser = app.config.getSourceUser(wikinum)
+sourcepass = app.config.getSourcePass(wikinum)
+sourcedb   = app.config.getSourceDB(wikinum)
 
-localpath = app.config.wikis[wikinum]["localpath"]
-localhost = app.config.wikis[wikinum]["localhost"]
-localuser = app.config.wikis[wikinum]["localuser"]
-localpass = app.config.wikis[wikinum]["localpass"]
-localdb   = app.config.wikis[wikinum]["localdb"]
+localpath = app.config.getLocalPath(wikinum)
+localhost = app.config.getLocalHost(wikinum)
+localuser = app.config.getLocalUser(wikinum)
+localpass = app.config.getLocalPass(wikinum)
+localdb   = app.config.getLocalDB(wikinum)
 
 
 # FIXME: don't rely on JSCMOD extension
@@ -116,7 +116,7 @@ def recordSubprocessOutput(title, comm):
 def writeOutputFiles():
 	global backupTimestamp
 	global output
-	logprefix = sourcedb + "_" + backupTimestamp
+	logprefix = wikiname + "_" + backupTimestamp
 	if len(output) > 0:
 		outputTitle = "Py Wiki Backup Standard Output File"
 		output = outputTitle + "\n" + ("="*len(outputTitle)) + "\n\n" + output
@@ -235,7 +235,7 @@ recordSubprocessOutput(
 ##### (9) COMPRESS images folder, push to static backup #####
 printSteps("Zip /images into backup location")
 
-zipFilePath = join(staticbackup,sourcedb+"_"+backupTimestamp+".zip")
+zipFilePath = join(staticbackup,wikiname+"_"+backupTimestamp+".zip")
 
 if zipType == "7zip":
 	proc = subprocess.Popen(
