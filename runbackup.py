@@ -37,6 +37,8 @@ wikinum = 1 # temporary until I've enabled looping through wikis
 
 wikiname = app.config.wikis[wikinum]["wikiname"]
 
+print "Set to Wiki #%d %s" % (wikinum, wikiname)
+
 sourcepath = app.config.wikis[wikinum]["sourcepath"]
 sourcehost = app.config.wikis[wikinum]["sourcehost"]
 sourceuser = app.config.wikis[wikinum]["sourceuser"]
@@ -119,11 +121,14 @@ def writeOutputFiles():
 def printSteps(stepText):
 	global previousStep
 	global stepNumber
+	global wikiname
+	global wikinum
+
 	if previousStep:
 		print "Complete: %s\n\n" % previousStep
 	previousStep = stepText
 	stepNumber = stepNumber + 1
-	stepText = "Step %d: %s" % (stepNumber, stepText)
+	stepText = "Wiki %d (%s) Step %d:\n    %s" % (wikinum, wikiname, stepNumber, stepText)
 	if debug:
 		debugAsk = raw_input("%s...continue? (yes/no): " % stepText)
 		if debugAsk.lower() != "yes":
