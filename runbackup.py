@@ -33,7 +33,20 @@ dir = os.path.dirname(os.path.realpath(__file__))
 ##### ENVIRONMENT VARIABLES #####
 import app.config
 
-wikinum = 1 # temporary until I've enabled looping through wikis
+print "Which wiki would you like to backup?"
+for (i, wiki) in enumerate( app.config.wikis ):
+	print "    %d: %s" % (i, wiki["wikiname"])
+wikinum = raw_input("Enter the wiki number above: ")
+
+
+try:
+	wikinum = int(wikinum)
+	wikiname = app.config.wikis[wikinum]["wikiname"]
+except IndexError:
+	print "There is no wiki number %d. Goodbye." % wikinum
+	exit()
+
+# wikinum = 1 # temporary until I've enabled looping through wikis
 
 wikiname = app.config.wikis[wikinum]["wikiname"]
 
