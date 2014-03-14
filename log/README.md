@@ -1,0 +1,1 @@
+This directory is where the STDOUT and STDERR streams from subprocess calls will go.

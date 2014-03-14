@@ -1,0 +1,29 @@
+{
+	"staticbackup" : "C:/Users/james/Documents/wikibackups",
+
+	"mysqldump" : "C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe",
+
+	"sevenZip" : "C:/Progra~1/7-Zip/7z.exe",
+
+	"wikis" : [
+
+		{
+			"wikiname"  : "TestWiki",
+
+			"sourcepath" : "//server/wikis/mywiki",
+			"sourcehost" : "databasehost.com",
+			"sourceuser" : "my_db_user",
+			"sourcepass" : "my_db_password",
+			"sourcedb" : "db_name",
+			
+			"localpath" : "C:/xampp/htdocs/wikis/mywiki",
+			"localhost" : "localhost",
+			"localuser" : "db_user",
+			"localpass" : "1234",
+			"localdb" : "db_name"
+		},
+		
+		{ "add" : "more", "wikis" : "here" }
+
+	]
+}

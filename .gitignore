@@ -1,0 +1,11 @@
+config.json
+log/*
+*.pyc
+
+!log/README.md
+
+# Operating systems
+## Mac OS X
+.DS_Store
+## Windows
+Thumbs.db
