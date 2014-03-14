@@ -8,22 +8,22 @@ with open( join(dir, "config.json"), 'r' ) as f:
 	f.close()
 
 
-if config["mysqldump"]:
+if "mysqldump" in config.keys():
 	mysqldump = config["mysqldump"]
 else:
 	mysqldump = "mysqldump"
 
-if config["mysql"]:
+if "mysql" in config.keys():
 	mysql = config["mysql"]
 else:
 	mysql = "mysql"
 
-if not config["zipType"] or config["zipType"] == "zip":
+if "zipType" not in config.keys() or config["zipType"] == "zip":
 	zipType = "zip"
 	sevenZip = False
 else:
 	zipType = "7zip"
-	if config["sevenZip"]:
+	if "sevenZip" in config.keys():
 		sevenZip = config["sevenZip"]
 	else:
 		sevenZip = "7z.exe"
