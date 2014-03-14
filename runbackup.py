@@ -207,7 +207,7 @@ proc = subprocess.Popen(
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 recordSubprocessOutput(
 	"MySQL Drop Local DB",
-	proc.communicate(file(wikiSqlFile).read()) )
+	proc.communicate() )
 
 
 ##### (7) Re-create local database #####
@@ -217,8 +217,8 @@ proc = subprocess.Popen(
 		"--password=%s" % localpass, "-e", "CREATE DATABASE %s" % localdb],
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 recordSubprocessOutput(
-	"MySQL Drop Local DB",
-	proc.communicate(file(wikiSqlFile).read()) )
+	"MySQL Recreate Local DB",
+	proc.communicate() )
 
 
 ##### (8) PUSH SQL to local
